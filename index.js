@@ -40,9 +40,27 @@ app.post("/api/create", (req, res) => {
 
 //show all transactions
 
-app.get("/api/view", (req, res) => {
+app.get("/api/viewall", (req, res) => {
   let sql = "Select * from transactions";
 
+  let query = conn.query(sql, (err, result) => {
+    if (err) throw err;
+    console.log(err);
+    res.send(
+      JSON.stringify({
+        status: 200,
+        error: null,
+        response: result,
+      })
+    );
+  });
+});
+
+//show transactions of a single user
+
+app.get("/api/viewsingle/:name", (req, res) => {
+  let name = req.params.name;
+  let sql = `Select * from transactions where sender= '${name}' or receiver= '${name}' `;
   let query = conn.query(sql, (err, result) => {
     if (err) throw err;
     console.log(err);
