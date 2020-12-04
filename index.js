@@ -74,6 +74,31 @@ app.get("/api/viewsingle/:name", (req, res) => {
   });
 });
 
+//update transaction
+
+app.put("/api/update/:id", (req, res) => {
+  let sql =
+    "UPDATE transactions SET date='" +
+    req.body.date +
+    "', receiver='" +
+    req.body.receiver +
+    "', amount='" +
+    req.body.amount +
+    "' where id=" +
+    req.params.id;
+  let query = conn.query(sql, (err, result) => {
+    if (err) throw err;
+    console.log(err);
+    res.send(
+      JSON.stringify({
+        status: 200,
+        error: null,
+        response: "transaction updated successfully",
+      })
+    );
+  });
+});
+
 app.listen(8000, () => {
   console.log("server is running");
 });
