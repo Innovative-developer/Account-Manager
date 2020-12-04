@@ -99,6 +99,23 @@ app.put("/api/update/:id", (req, res) => {
   });
 });
 
+//delete a transaction
+
+app.delete("/api/delete/:id", (req, res) => {
+  let sql = "Delete from transactions where id=" + req.params.id;
+  let query = conn.query(sql, (err, result) => {
+    if (err) throw err;
+    console.log(err);
+    res.send(
+      JSON.stringify({
+        status: 200,
+        error: null,
+        response: "transaction deleted successfully",
+      })
+    );
+  });
+});
+
 app.listen(8000, () => {
   console.log("server is running");
 });
