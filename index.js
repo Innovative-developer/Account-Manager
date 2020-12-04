@@ -21,17 +21,36 @@ app.post("/api/create", (req, res) => {
   let data = {
     date: req.body.date,
     sender: req.body.sender,
-    reciever: req.body.reciever,
+    receiver: req.body.receiver,
     amount: req.body.amount,
   };
   let sql = "INSERT INTO transactions SET ?";
   let query = conn.query(sql, data, (err, result) => {
     if (err) throw err;
+    console.log(err);
     res.send(
       JSON.stringify({
         status: 200,
         error: null,
         response: "New transaction added",
+      })
+    );
+  });
+});
+
+//show all transactions
+
+app.get("/api/view", (req, res) => {
+  let sql = "Select * from transactions";
+
+  let query = conn.query(sql, (err, result) => {
+    if (err) throw err;
+    console.log(err);
+    res.send(
+      JSON.stringify({
+        status: 200,
+        error: null,
+        response: result,
       })
     );
   });
